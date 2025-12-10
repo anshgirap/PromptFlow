@@ -4,9 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PromptFlow</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="logos/logosmall.png">
+
 <style>
+/* GENERAL UI */
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
@@ -15,14 +17,15 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  overflow: hidden;
-  padding-top: 60px;
+  padding-top: 40px;
+  overflow-x: hidden;
+  overflow-y: hidden;
 }
 
-/* Moving gradient blobs */
+/* Moving gradients */
 body::before, body::after {
   content: '';
-  position: absolute;
+  position: fixed;
   border-radius: 50%;
   filter: blur(250px);
   opacity: 0.7;
@@ -30,18 +33,14 @@ body::before, body::after {
   z-index: 0;
 }
 body::before {
-  width: 400px;
-  height: 400px;
+  width: 400px; height: 400px;
   background: linear-gradient(45deg, #ff3030, #b30000, #ff1a1a);
-  top: -150px;
-  left: -150px;
+  top: -150px; left: -150px;
 }
 body::after {
-  width: 500px;
-  height: 500px;
+  width: 500px; height: 500px;
   background: linear-gradient(45deg, #b30000, #ff1a1a, #680101);
-  bottom: -200px;
-  right: -200px;
+  bottom: -200px; right: -200px;
   animation-duration: 16s;
 }
 @keyframes float {
@@ -50,88 +49,162 @@ body::after {
   100% { transform: translate(0,0) rotate(360deg); }
 }
 
-/* Logo */
+/* LOGO */
 .logo-container {
-    margin-bottom: 40px;
-    z-index: 1;
-    position: relative;
+    margin-bottom: 20px;
+    z-index: 10;
     text-align: center;
 }
 .logo {
     max-width: 300px;
-    height: auto;
     animation: floatLogo 5s ease-in-out infinite;
-    filter: drop-shadow(0 0 12px rgba(230, 52, 52, 0.8));
-    margin-bottom: 50px;
-    margin-top: 180px;
+    filter: drop-shadow(0 0 12px rgba(230,52,52,0.8));
+    margin-top: 200px;
+    margin-bottom: 40px;
 }
 @keyframes floatLogo {
-    0% { transform: translateY(0); filter: drop-shadow(0 0 12px rgba(255,77,77,0.8)); }
-    50% { transform: translateY(-6px); filter: drop-shadow(0 0 18px rgba(255,77,77,1)); }
-    100% { transform: translateY(0); filter: drop-shadow(0 0 12px rgba(255,77,77,0.8)); }
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+    100% { transform: translateY(0); }
 }
 
-/* Container */
+/* CENTER FIX */
+.center-wrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/*  CONTAINER  */
 .container {
   width: 100%;
   max-width: 600px;
   display: flex;
   flex-direction: column;
   gap: 20px;
-  z-index: 1;
+  z-index: 5;
   position: relative;
   align-items: center;
 }
 
-/* Frosted glass sections */
+/* Glass UI section */
 .section {
     width: 100%;
     border-radius: 15px;
     padding: 20px;
     background: rgba(255,255,255,0.05);
     backdrop-filter: blur(25px) saturate(180%);
-    -webkit-backdrop-filter: blur(25px) saturate(180%);
     border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 0 1px rgba(255,255,255,0.1);
+    position: relative;
+    z-index: 10;
 }
 
-/* Transparent input */
+/* INPUT + DROPDOWN */
+.input-wrapper {
+    position: relative;
+    width: 100%;
+    z-index: 50;
+}
+
 textarea {
     width: 100%;
     padding: 16px;
+    padding-right: 150px;
     border-radius: 12px;
     background: transparent;
     border: none;
-    color: #fff;
-    font-size: 1rem;
-    font-family: 'Roboto Mono', monospace;
-    resize: none;
     outline: none;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    resize: none;
+    caret-color: #ff4d4d;
 }
 
-/* ERROR WRAPPER */
-.error-wrapper {
-    position: relative;
-    height: 0px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    overflow: visible;
-}
-
-/* ERROR MESSAGE */
-.error-message {
+/* CUSTOM DROPDOWN */
+.dropdown-wrapper {
     position: absolute;
+    right: -10px;
+    bottom: -10px;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.18);
+    backdrop-filter: blur(15px) saturate(180%);
+    padding: 6px 14px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 999999;
+}
+
+.dropdown-label {
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.dropdown-arrow {
+    color: #ffffffd5;
+    font-size: 1.15rem;
+    transition: transform 0.25s ease;
+}
+
+.dropdown-options {
+    position: absolute;
+    right: 0;
+    top: calc(100% + 6px); 
+
+    width: 180px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.22);
+    border-radius: 12px;
+
+    padding: 6px 0;
+    display: none;
+    flex-direction: column;
+
+    opacity: 0;
+    transform: translateY(-4px) scale(0.97);
+    transform-origin: top right;
+
+    transition:
+        opacity 220ms ease,
+        transform 240ms ease;
+
+    z-index: 99999999; 
+}
+
+.dropdown-options.open {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+.dropdown-option {
+    padding: 10px 14px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+.dropdown-option:hover {
+    background: rgba(255,255,255,0.22);
+}
+
+/*  ERROR */
+.error-wrapper { height: 0; display:flex; justify-content:center; }
+.error-message {
     color: #f53b3b;
     font-size: 0.9rem;
-    font-weight: 600;
     opacity: 0;
     transform: translateY(8px);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    text-align: center;
+    transition: opacity 0.25s, transform 0.25s;
+    position: absolute;
 }
 
-/* Button */
+/* BUTTON  */
 button {
   padding: 16px;
   font-size: 1rem;
@@ -142,71 +215,66 @@ button {
   font-weight: 700;
   border: 1px solid rgba(255,255,255,0.25);
   cursor: pointer;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 0 4px rgba(255,255,255,0.1);
-  transition: all 0.3s ease;
   width: 107%;
-  margin-top: 20px;
+  transition: all 0.3s ease;
+  z-index: 2; 
 }
 button:hover {
-  background: rgba(225, 225, 225, 0.2);
+  background: rgba(225,225,225,0.2);
   transform: translateY(-2px);
 }
 
-/* Loader */
-.loader {
-  display: none;
-  border: 3px solid rgba(255, 255, 255, 0.15);
-  border-top: 3px solid #b80303;
-  border-radius: 50%;
-  width: 25px;
-  height: 25px;
-  animation: spin 0.7s linear infinite;
-}
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Output */
+/* OUTPUT */
 .output {
     display: none;
     opacity: 0;
+    color: white;
     min-height: 180px;
-    font-family: 'Roboto Mono', monospace;
+    padding: 16px;
     background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(25px) saturate(180%);
+    backdrop-filter: blur(25px);
     border-radius: 12px;
     border: 1px solid rgba(255,255,255,0.15);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-    padding: 16px;
-    white-space: pre-wrap;
-    overflow-y: auto;
-    transition: opacity 0.4s;
-    color: #fff;
+    transition: opacity 0.3s ease;
 }
 
-a#downloadLink {
-    display: none;
-    margin-top: 10px;
-    color: #ff4d4d;
-    text-decoration: underline;
-    font-weight: 600;
-}
 </style>
 </head>
+
 <body>
 
 <div class="logo-container">
-    <img src="logos/logo.png" alt="PromptFlow Logo" class="logo">
+    <img src="logos/logo.png" class="logo">
 </div>
 
+<div class="center-wrapper">
 <div class="container">
+
     <div class="section">
-        <textarea id="prompts" placeholder="Enter idea..."></textarea>
+        <div class="input-wrapper">
+
+            <textarea id="prompts" placeholder="Enter idea..."></textarea>
+
+            <!-- CUSTOM DROPDOWN -->
+            <div class="dropdown-wrapper" id="dropdown">
+                <span class="dropdown-label" id="dropdownLabel">Gemini</span>
+                <span class="dropdown-arrow" id="dropdownArrow">▾</span>
+
+                <div class="dropdown-options" id="dropdownOptions">
+                    <div class="dropdown-option">Gemini</div>
+                    <div class="dropdown-option">ChatGPT</div>
+                    <div class="dropdown-option">Claude</div>
+                    <div class="dropdown-option">Midjourney</div>
+                    <div class="dropdown-option">Stable Diffusion</div>
+                    <div class="dropdown-option">DALL·E</div>
+                    <div class="dropdown-option">Firefly</div>
+                    <div class="dropdown-option">Ollama</div>
+                </div>
+            </div>
+
+        </div>
     </div>
 
-    <!-- FLOATING ERROR -->
     <div class="error-wrapper">
         <p id="errorMsg" class="error-message"></p>
     </div>
@@ -216,37 +284,67 @@ a#downloadLink {
     <div id="loader" class="loader"></div>
 
     <div class="section output" id="output"></div>
-    <a id="downloadLink">Download CSV</a>
+
+</div>
 </div>
 
 <script>
+/*  DROPDOWN LOGIC */
+const dropdown = document.getElementById("dropdown");
+const dropdownOptions = document.getElementById("dropdownOptions");
+const dropdownLabel = document.getElementById("dropdownLabel");
+const dropdownArrow = document.getElementById("dropdownArrow");
+
+dropdown.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const open = dropdownOptions.classList.contains("open");
+
+    if (open) {
+        dropdownOptions.classList.remove("open");
+        dropdownOptions.style.display = "none";
+        dropdownArrow.style.transform = "rotate(0deg)";
+    } else {
+        dropdownOptions.style.display = "flex";
+        dropdownOptions.classList.add("open");
+        dropdownArrow.style.transform = "rotate(180deg)";
+    }
+});
+
+document.addEventListener("click", () => {
+    if (dropdownOptions.classList.contains("open")) {
+        dropdownOptions.classList.remove("open");
+        dropdownOptions.style.display = "none";
+        dropdownArrow.style.transform = "rotate(0deg)";
+    }
+});
+
+document.querySelectorAll(".dropdown-option").forEach(option => {
+    option.addEventListener("click", (e) => {
+        dropdownLabel.textContent = e.target.textContent;
+    });
+});
+
+/*  BACKEND REQUEST  */
 async function generateOutputs() {
     const prompt = document.getElementById('prompts').value.trim();
+    const platform = dropdownLabel.textContent;
+
     const loader = document.getElementById('loader');
     const outputDiv = document.getElementById('output');
     const errorMsg = document.getElementById('errorMsg');
     const button = document.querySelector("button");
 
     errorMsg.style.opacity = 0;
-    errorMsg.style.transform = "translateY(8px)";
     errorMsg.innerText = "";
 
     if (!prompt) {
         errorMsg.innerText = "Please enter a prompt.";
         errorMsg.style.opacity = 1;
-        errorMsg.style.transform = "translateY(0)";
-
-        setTimeout(() => {
-            errorMsg.style.opacity = 0;
-            errorMsg.style.transform = "translateY(8px)";
-        }, 2500);
-
         return;
     }
 
     loader.style.display = "block";
     outputDiv.style.display = "none";
-    outputDiv.style.opacity = 0;
     button.disabled = true;
     button.style.opacity = 0.5;
 
@@ -254,7 +352,7 @@ async function generateOutputs() {
         const response = await fetch("http://127.0.0.1:5000/generate", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ prompt })
+            body: JSON.stringify({ prompt, platform })
         });
 
         const data = await response.json();
@@ -266,19 +364,16 @@ async function generateOutputs() {
         if (data.error) {
             outputDiv.innerText = "Error: " + data.error;
             outputDiv.style.display = "block";
-            setTimeout(() => outputDiv.style.opacity = 1, 50);
             return;
         }
 
         outputDiv.innerText = data.expanded_prompt;
         outputDiv.style.display = "block";
-        setTimeout(() => outputDiv.style.opacity = 1, 50);
+        outputDiv.style.opacity = 1;
 
     } catch (err) {
         loader.style.display = "none";
         button.disabled = false;
-        button.style.opacity = 1;
-
         outputDiv.style.display = "block";
         outputDiv.innerText = "Error generating prompt: " + err;
     }
