@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PromptFlow</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="logos/logosmall.png">
+<style>
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: #0a0a0a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+  padding-top: 60px;
+}
+
+/* Moving gradient blobs */
+body::before, body::after {
+  content: '';
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(250px);
+  opacity: 0.7;
+  animation: float 13s linear infinite alternate;
+  z-index: 0;
+}
+body::before {
+  width: 400px;
+  height: 400px;
+  background: linear-gradient(45deg, #ff3030, #b30000, #ff1a1a);
+  top: -150px;
+  left: -150px;
+}
+body::after {
+  width: 500px;
+  height: 500px;
+  background: linear-gradient(45deg, #b30000, #ff1a1a, #680101);
+  bottom: -200px;
+  right: -200px;
+  animation-duration: 16s;
+}
+@keyframes float {
+  0% { transform: translate(0,0) rotate(0deg); }
+  50% { transform: translate(120px,120px) rotate(180deg); }
+  100% { transform: translate(0,0) rotate(360deg); }
+}
+
+/* Logo */
+.logo-container {
+    margin-bottom: 40px;
+    z-index: 1;
+    position: relative;
+    text-align: center;
+}
+.logo {
+    max-width: 300px;
+    height: auto;
+    animation: floatLogo 5s ease-in-out infinite;
+    filter: drop-shadow(0 0 12px rgba(230, 52, 52, 0.8));
+    margin-bottom: 50px;
+    margin-top: 180px;
+}
+@keyframes floatLogo {
+    0% { transform: translateY(0); filter: drop-shadow(0 0 12px rgba(255,77,77,0.8)); }
+    50% { transform: translateY(-6px); filter: drop-shadow(0 0 18px rgba(255,77,77,1)); }
+    100% { transform: translateY(0); filter: drop-shadow(0 0 12px rgba(255,77,77,0.8)); }
+}
+
+/* Container */
+.container {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  z-index: 1;
+  position: relative;
+  align-items: center;
+}
+
+/* Frosted glass sections */
+.section {
+    width: 100%;
+    border-radius: 15px;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25), inset 0 0 1px rgba(255,255,255,0.1);
+}
+
+/* Transparent input */
+textarea {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    font-family: 'Roboto Mono', monospace;
+    resize: none;
+    outline: none;
+}
+
+/* ERROR WRAPPER */
+.error-wrapper {
+    position: relative;
+    height: 0px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: visible;
+}
+
+/* ERROR MESSAGE */
+.error-message {
+    position: absolute;
+    color: #f53b3b;
+    font-size: 0.9rem;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    text-align: center;
+}
+
+/* Button */
+button {
+  padding: 16px;
+  font-size: 1rem;
+  border-radius: 18px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(24px) saturate(180%);
+  color: #fff;
+  font-weight: 700;
+  border: 1px solid rgba(255,255,255,0.25);
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 0 4px rgba(255,255,255,0.1);
+  transition: all 0.3s ease;
+  width: 107%;
+  margin-top: 20px;
+}
+button:hover {
+  background: rgba(225, 225, 225, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Loader */
+.loader {
+  display: none;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  border-top: 3px solid #b80303;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Output */
+.output {
+    display: none;
+    opacity: 0;
+    min-height: 180px;
+    font-family: 'Roboto Mono', monospace;
+    background: rgba(255,255,255,0.05);
+    backdrop-filter: blur(25px) saturate(180%);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.15);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+    padding: 16px;
+    white-space: pre-wrap;
+    overflow-y: auto;
+    transition: opacity 0.4s;
+    color: #fff;
+}
+
+a#downloadLink {
+    display: none;
+    margin-top: 10px;
+    color: #ff4d4d;
+    text-decoration: underline;
+    font-weight: 600;
+}
+</style>
+</head>
+<body>
+
+<div class="logo-container">
+    <img src="logos/logo.png" alt="PromptFlow Logo" class="logo">
+</div>
+
+<div class="container">
+    <div class="section">
+        <textarea id="prompts" placeholder="Enter idea..."></textarea>
+    </div>
+
+    <!-- FLOATING ERROR -->
+    <div class="error-wrapper">
+        <p id="errorMsg" class="error-message"></p>
+    </div>
+
+    <button onclick="generateOutputs()">Generate</button>
+
+    <div id="loader" class="loader"></div>
+
+    <div class="section output" id="output"></div>
+    <a id="downloadLink">Download CSV</a>
+</div>
+
+<script>
+async function generateOutputs() {
+    const prompt = document.getElementById('prompts').value.trim();
+    const loader = document.getElementById('loader');
+    const outputDiv = document.getElementById('output');
+    const errorMsg = document.getElementById('errorMsg');
+    const button = document.querySelector("button");
+
+    errorMsg.style.opacity = 0;
+    errorMsg.style.transform = "translateY(8px)";
+    errorMsg.innerText = "";
+
+    if (!prompt) {
+        errorMsg.innerText = "Please enter a prompt.";
+        errorMsg.style.opacity = 1;
+        errorMsg.style.transform = "translateY(0)";
+
+        setTimeout(() => {
+            errorMsg.style.opacity = 0;
+            errorMsg.style.transform = "translateY(8px)";
+        }, 2500);
+
+        return;
+    }
+
+    loader.style.display = "block";
+    outputDiv.style.display = "none";
+    outputDiv.style.opacity = 0;
+    button.disabled = true;
+    button.style.opacity = 0.5;
+
+    try {
+        const response = await fetch("http://127.0.0.1:5000/generate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ prompt })
+        });
+
+        const data = await response.json();
+
+        loader.style.display = "none";
+        button.disabled = false;
+        button.style.opacity = 1;
+
+        if (data.error) {
+            outputDiv.innerText = "Error: " + data.error;
+            outputDiv.style.display = "block";
+            setTimeout(() => outputDiv.style.opacity = 1, 50);
+            return;
+        }
+
+        outputDiv.innerText = data.expanded_prompt;
+        outputDiv.style.display = "block";
+        setTimeout(() => outputDiv.style.opacity = 1, 50);
+
+    } catch (err) {
+        loader.style.display = "none";
+        button.disabled = false;
+        button.style.opacity = 1;
+
+        outputDiv.style.display = "block";
+        outputDiv.innerText = "Error generating prompt: " + err;
+    }
+}
+</script>
+
+</body>
+</html>
