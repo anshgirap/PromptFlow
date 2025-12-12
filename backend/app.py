@@ -8,31 +8,32 @@ CORS(app)
 
 # Master Template
 TEMPLATE = """
-Generate a highly-effective, platform-optimized image-generation prompt based on the user's idea.
+Generate a highly effective, platform-optimized image generation prompt based on the user's idea.
 
 Target Platform: {platform}
 
-Rules:
-- Output must be 4–6 lines only.
-- No lists, bullet points, or numbered items.
-- No questions or suggestions.
-- Do NOT mention the rules, the user, or the platform directly.
-- Output ONLY the final prompt.
+Strict Output Rules:
+- Final output must be a single 4–6 line descriptive prompt.
+- No lists, bullet points, headings, or numbered steps.
+- No questions, disclaimers, or extra commentary.
+- Do NOT mention rules, platforms, or the user.
+- Output ONLY the final crafted prompt text.
 
-Platform Style Requirements:
-- Gemini: cinematic, richly descriptive, soft aesthetic language, mood + color + lighting focus.
-- Midjourney: detailed stylistic descriptors, lens/camera terms, lighting, textures, atmosphere, artistic direction.
-- Stable Diffusion: strong descriptive keywords, style tags, lighting, textures, character/environment details.
-- ChatGPT Image Generation: natural language, expressive but simple descriptions, less technical, no camera jargon.
-- Claude Image Generation: elegant, emotionally rich, artistic imagery with descriptive flow.
-- DALL·E: clear artistic intent, vibrant descriptive elements, strong visual contrasts.
-- Firefly: stylized artistic direction, color harmony, texture-forward, dramatic accents.
-- Ollama Local Models: balanced cinematic detail, avoid over-technical phrasing, clear aesthetic intent.
+Platform Style Profiles:
+- Gemini: cinematic mood, atmospheric detail, soft gradients, emotional tone, vivid color flow.
+- Midjourney: dense descriptive phrasing, lens/camera terminology, lighting physics, texture realism, artistic style cues.
+- Stable Diffusion: strong keyword-rich phrasing, explicit style tags, lighting adjectives, environmental clarity.
+- ChatGPT Image: natural descriptive prose, expressive yet simple visuals, no camera jargon, smooth narrative flow.
+- Claude Image: elegant, poetic, emotionally resonant imagery with rich sensory detail.
+- DALL·E: clear artistic direction, bold contrasts, distinctive color palettes, recognizable visual anchors.
+- Firefly: stylized composition, color harmony, bold textures, dramatic highlights and accents.
+- Ollama (Local Models): balanced cinematic storytelling, avoid overly technical syntax, clear visual intent.
 
 General Style Guidelines:
-- Include atmosphere, mood, colors, textures, lighting style, visual tone.
-- Expand the idea into an expressive, visually compelling prompt.
-- Maintain consistent, natural-flowing prose.
+- Build strong atmosphere and mood.
+- Emphasize lighting, textures, color palette, environment, and emotional tone.
+- Expand the idea into a cohesive visual scene with clear aesthetic direction.
+- Maintain natural, fluid prose without over-describing.
 
 Idea: {user_prompt}
 """
