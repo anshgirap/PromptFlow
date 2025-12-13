@@ -8,7 +8,7 @@ It focuses on clarity, consistency, and visual intent by adapting prompt structu
 
 ## 🖼 Preview
 
-![PromptFlow UI](./assets/promptflow-preview.png)
+![PromptFlow UI](./assets/preview/promptflow-preview.png)
 
 ---
 
@@ -153,10 +153,12 @@ No build step required.
 PromptFlow/
 │
 ├── assets/
-│   ├── promptflow-preview.png
-│   └── logos/
-│       ├── logo.png
-│       └── logosmall.png
+│   ├── logos/
+│   │   ├── logo.png
+│   │   └── logosmall.png
+│   │
+│   └── preview/
+│       └── promptflow-preview.png
 │
 ├── backend/
 │   ├── app.py
