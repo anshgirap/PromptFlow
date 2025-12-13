@@ -1,52 +1,60 @@
 # PromptFlow ⚡
 
-A refined, platform-aware prompt generator designed to convert simple ideas into high-quality image generation prompts.  
-Built with a cinematic UI, smooth interactions, and support for all major AI image models.
+PromptFlow is a platform-aware AI prompt generator that transforms simple ideas into high-quality, image-generation prompts tailored for different AI models 🎨
+
+It focuses on clarity, consistency, and visual intent, adapting prompt structure and tone based on how each platform interprets prompts.
+
+---
+
+## 🖼 Preview
+
+![PromptFlow UI](./assets/preview/promptflow-preview.png)
 
 ---
 
 ## 📸 Overview
 
-PromptFlow produces optimized 4–6 line prompts tailored for each generation platform.  
-The goal is consistency, clarity and style that matches how each platform interprets prompts.
+Different image generation models interpret prompts in very different ways.  
+PromptFlow solves this by intelligently reshaping prompts to feel native to each platform.
+
+The output is a clean, expressive **4–6 line prompt** that avoids over-engineering while still delivering strong visual results.
 
 ---
 
 ## 🎯 Supported Platforms
 
-| Platform              | Style Focus                                              |
-| --------------------- | -------------------------------------------------------- |
-| **Gemini**            | Cinematic, atmospheric, soft color and lighting language |
-| **Midjourney**        | Lens terms, artistic direction, detailed textures        |
-| **Stable Diffusion**  | Keyword-rich, structured descriptors                     |
-| **ChatGPT Image Gen** | Natural phrasing, expressive but simple                  |
-| **Claude**            | Poetic, elegant, emotional tone                          |
-| **DALL·E**            | Strong contrast, vibrant visuals, clear intent           |
-| **Firefly**           | Stylized color harmony and dramatic accents              |
-| **Ollama (Local)**    | Balanced cinematic detail without technical jargon       |
+| Platform                 | Prompt Style                                        |
+| ------------------------ | --------------------------------------------------- |
+| Gemini                   | Cinematic, atmospheric, mood-driven descriptions    |
+| Midjourney               | Artistic direction, lighting, textures, lens detail |
+| Stable Diffusion         | Structured, keyword-rich visual descriptors         |
+| ChatGPT Image Generation | Natural language, expressive and simple             |
+| Claude                   | Elegant, emotionally rich imagery                   |
+| DALL·E                   | Clear intent, vibrant contrasts                     |
+| Firefly                  | Stylized color harmony and dramatic accents         |
+| Ollama (Local)           | Balanced cinematic detail, minimal jargon           |
 
 ---
 
-## ✨ Features
+## ✨ Key Features
 
-### 🔹 Multi-Platform Prompt Optimization
+### 🔹 Platform-Aware Prompt Generation
 
-Each output is automatically styled based on the selected generator.
+Each prompt is dynamically optimized based on the selected image generation platform.
 
-### 🔹 Glassmorphism UI
+### 🔹 Minimal, Premium UI
 
-Floating gradients  
-Soft shadows  
-Smooth dropdown animations  
-Responsive layout
+- Glassmorphism design
+- Floating gradient background
+- Smooth dropdown and fade transitions
 
-### 🔹 Local Processing
+### 🔹 Local Inference
 
-Runs on **Ollama**, avoiding API usage limits or billing.
+Runs fully on **Ollama**, avoiding API limits, billing, or external dependencies 🔒
 
-### 🔹 Fast Output
+### 🔹 Fast Workflow
 
-Simple idea → Polished final prompt in seconds.
+Simple idea → polished final prompt in seconds ⚡
 
 ---
 
@@ -62,94 +70,28 @@ Simple idea → Polished final prompt in seconds.
 
 - Python
 - Flask
-- Ollama local inference
+- Ollama
 
 ---
 
 ## 📁 Project Structure
 
-```
+```text
 PromptFlow/
+│
+├── assets/
+│   ├── promptflow-preview.png
+│   └── logos/
+│       ├── logo.png
+│       └── logosmall.png
+│
+├── frontend/
+│   └── index.html
 │
 ├── backend/
 │   ├── app.py
-│   ├── requirements.txt
-│   └── .env (ignored)
-│
-├── frontend/
-│   ├── index.html
-│   ├── logos/
-│       ├── logo.png
-│       └── logosmall.png
+│   └── requirements.txt
 │
 ├── README.md
 └── LICENSE
 ```
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/anshgirap/PromptFlow.git
-cd PromptFlow
-```
-
-### 2. Install backend dependencies
-
-```bash
-cd backend
-pip install -r requirements.txt
-```
-
-### 3. Install Ollama
-
-Download from https://ollama.com
-
-Pull a model (example):
-
-```bash
-ollama pull gemma:2b
-```
-
-### 4. Start the backend
-
-```bash
-python app.py
-```
-
-### 5. Open the frontend
-
-Open `frontend/index.html` in any browser.
-
----
-
-## 🧠 How PromptFlow Works
-
-1. User enters an idea.
-2. User selects the platform from a custom dropdown.
-3. Backend injects the idea into a curated template.
-4. Ollama generates a polished, platform-styled output.
-5. Result fades in through a smooth, glass UI component.
-
----
-
-## ⚙ Customization
-
-You can modify platform rules inside **app.py** under the template block.  
-This lets you change tone, complexity or artistic style instantly.
-
----
-
-## 📄 License
-
-MIT License
-
----
-
-## ⭐ Support
-
-If you find PromptFlow helpful, consider starring the project.  
-It motivates future updates and improvements.
