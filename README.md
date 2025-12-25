@@ -191,12 +191,6 @@ This allows easy tuning of tone, complexity, and artistic emphasis without chang
 
 ---
 
-## 📄 License
-
-MIT License
-
----
-
 ## ⭐ Support
 
 If you find PromptFlow useful, consider starring the repository.  
