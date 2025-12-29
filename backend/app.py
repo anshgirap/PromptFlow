@@ -8,36 +8,50 @@ CORS(app)
 
 # Master Template
 TEMPLATE = """
-Generate a highly effective, platform-optimized image generation prompt based on the user's idea.
+Generate a highly effective, platform-optimized image-generation prompt based on the user’s idea.
 
 Target Platform: {platform}
 
 Strict Output Rules:
-- Final output must be a single 4–6 line descriptive prompt.
-- No lists, bullet points, headings, or numbered steps.
-- No questions, disclaimers, or extra commentary.
+- Output must be a single 4–6 line descriptive prompt.
+- No lists, bullet points, headings, or numbering.
+- No questions, disclaimers, or commentary.
 - Do NOT mention rules, platforms, or the user.
 - Output ONLY the final crafted prompt text.
 
 Platform Style Profiles:
-- Gemini: cinematic mood, atmospheric detail, soft gradients, emotional tone, vivid color flow.
-- Midjourney: dense descriptive phrasing, lens/camera terminology, lighting physics, texture realism, artistic style cues.
-- Stable Diffusion: strong keyword-rich phrasing, explicit style tags, lighting adjectives, environmental clarity.
-- ChatGPT Image: natural descriptive prose, expressive yet simple visuals, no camera jargon, smooth narrative flow.
+- Gemini: cinematic atmosphere, emotional tone, soft gradients, rich lighting, immersive color flow.
+- Midjourney: dense stylistic detail, lens and camera language, lighting physics, texture realism, artistic direction.
+- Stable Diffusion: strong keyword-rich phrasing, explicit visual descriptors, lighting terms, environment and subject clarity.
+- ChatGPT Image: natural expressive language, simple but vivid visuals, smooth narrative flow, no camera jargon.
 - Claude Image: elegant, poetic, emotionally resonant imagery with rich sensory detail.
-- DALL·E: clear artistic direction, bold contrasts, distinctive color palettes, recognizable visual anchors.
-- Firefly: stylized composition, color harmony, bold textures, dramatic highlights and accents.
-- Ollama (Local Models): balanced cinematic storytelling, avoid overly technical syntax, clear visual intent.
+- DALL·E: clear artistic intent, bold contrasts, strong color palettes, recognizable visual anchors.
+- Firefly: stylized composition, color harmony, texture-forward rendering, dramatic highlights.
+- Ollama (Local Models): balanced cinematic storytelling, clear visual intent, controlled detail without technical clutter.
+
+Core Scene Architecture:
+Every output must clearly imply:
+- A primary subject
+- A surrounding environment or background
+- Lighting direction and quality
+- A dominant color mood or palette
+- Depth, perspective, or framing
+
+Visual Composition Guidelines:
+- Anchor the scene spatially so the subject feels placed, not floating.
+- Suggest foreground, midground, and background when possible.
+- Use lighting to guide attention and emotion.
+- Let color and texture reinforce mood.
 
 General Style Guidelines:
-- Build strong atmosphere and mood.
-- Emphasize lighting, textures, color palette, environment, and emotional tone.
-- Expand the idea into a cohesive visual scene with clear aesthetic direction.
-- Maintain natural, fluid prose without over-describing.
+- Expand the idea into a cohesive visual scene, not just a description.
+- Maintain a consistent aesthetic identity across the entire prompt.
+- Use vivid, cinematic language without becoming verbose.
+- Avoid generic or hollow phrasing.
+- The final result should read like a professional art direction brief, not a caption.
 
 Idea: {user_prompt}
 """
-
 
 @app.route("/generate", methods=["POST"])
 def generate():
