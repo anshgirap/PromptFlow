@@ -66,11 +66,11 @@ def generate():
     final_prompt = TEMPLATE.format(platform=platform, user_prompt=user_prompt)
 
     try:
-        # Call local Ollama (Gemma3:4b)
+        # Call local Ollama (qwen2.5:1.5b)
         response = requests.post(
             "http://localhost:11434/api/generate",
             json={
-                "model": "gemma3:4b",
+                "model": "qwen2.5:1.5b",
                 "prompt": final_prompt,
                 "stream": False
             }
