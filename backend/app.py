@@ -1,57 +1,102 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import requests
+import time
+import os
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
+
+# Hugging Face Router Config
+
+HF_URL = "https://router.huggingface.co/v1/chat/completions"
+HF_MODEL = "meta-llama/Meta-Llama-3-8B-Instruct"
+HF_TOKEN = os.environ.get("HF_TOKEN")
 
 
-# Master Template
-TEMPLATE = """
-Generate a highly effective, platform-optimized image-generation prompt based on the user’s idea.
+HEADERS = {
+    "Authorization": f"Bearer {HF_TOKEN}",
+    "Content-Type": "application/json"
+}
 
-Target Platform: {platform}
+# Prompt Template
 
-Strict Output Rules:
-- Output must be a single 4–6 line descriptive prompt.
-- No lists, bullet points, headings, or numbering.
-- No questions, disclaimers, or commentary.
-- Do NOT mention rules, platforms, or the user.
-- Output ONLY the final crafted prompt text.
+TEMPLATE = """You are a professional AI prompt engineer whose job is to transform rough, unclear, or weak user input into a precise, high-quality, results-driven prompt.
 
-Platform Style Profiles:
-- Gemini: cinematic atmosphere, emotional tone, soft gradients, rich lighting, immersive color flow.
-- Midjourney: dense stylistic detail, lens and camera language, lighting physics, texture realism, artistic direction.
-- Stable Diffusion: strong keyword-rich phrasing, explicit visual descriptors, lighting terms, environment and subject clarity.
-- ChatGPT Image: natural expressive language, simple but vivid visuals, smooth narrative flow, no camera jargon.
-- Claude Image: elegant, poetic, emotionally resonant imagery with rich sensory detail.
-- DALL·E: clear artistic intent, bold contrasts, strong color palettes, recognizable visual anchors.
-- Firefly: stylized composition, color harmony, texture-forward rendering, dramatic highlights.
-- Ollama (Local Models): balanced cinematic storytelling, clear visual intent, controlled detail without technical clutter.
+The rewritten prompt should be optimized for this target platform:
+{platform}
 
-Core Scene Architecture:
-Every output must clearly imply:
-- A primary subject
-- A surrounding environment or background
-- Lighting direction and quality
-- A dominant color mood or palette
-- Depth, perspective, or framing
+Your goal is to make the user’s intent clearer, more structured, and more effective so that the chosen AI platform produces a significantly better result.
 
-Visual Composition Guidelines:
-- Anchor the scene spatially so the subject feels placed, not floating.
-- Suggest foreground, midground, and background when possible.
-- Use lighting to guide attention and emotion.
-- Let color and texture reinforce mood.
+You must follow ALL of these rules:
 
-General Style Guidelines:
-- Expand the idea into a cohesive visual scene, not just a description.
-- Maintain a consistent aesthetic identity across the entire prompt.
-- Use vivid, cinematic language without becoming verbose.
-- Avoid generic or hollow phrasing.
-- The final result should read like a professional art direction brief, not a caption.
+• Output a single rewritten prompt — no explanations, no analysis, no commentary  
+• Do not include lists, bullet points, or numbered steps  
+• Do not include quotation marks  
+• Do not include headings  
+• Do not mention the user, rules, or yourself  
+• Do not repeat the input — improve it  
 
-Idea: {user_prompt}
+The rewritten prompt must:
+- Be clearer than the original  
+- Be more specific than the original  
+- Preserve the user’s intent  
+- Remove ambiguity  
+- Add useful constraints where appropriate  
+- Use natural, professional language  
+
+If the input is vague, infer the most likely intent and make it concrete.  
+If the input is short, expand it.  
+If the input is messy, clean it up.  
+If the input is detailed, refine and sharpen it.
+
+Adapt tone, structure, and phrasing to match the selected platform when relevant.
+
+The output should feel like something written by a skilled professional who knows exactly how to get the best possible result from an AI.
+
+User input:
+{user_prompt}
+
 """
+
+# Hugging Face Call
+
+def call_hf(prompt):
+    payload = {
+        "model": HF_MODEL,
+        "messages": [
+            {
+                "role": "user",
+                "content": prompt
+            }
+        ],
+        "temperature": 0.7,
+        "max_tokens": 400
+    }
+
+    for _ in range(5):
+        try:
+            r = requests.post(HF_URL, headers=HEADERS, json=payload, timeout=60)
+            data = r.json()
+        except Exception as e:
+            return None, str(e)
+
+        # HF router error
+        if "error" in data:
+            msg = data["error"].get("message", "")
+            if "loading" in msg.lower():
+                time.sleep(5)
+                continue
+            return None, msg
+
+        try:
+            return data["choices"][0]["message"]["content"], None
+        except:
+            return None, f"Bad response: {data}"
+
+    return None, "Model did not load in time"
+
+# API Endpoint
 
 @app.route("/generate", methods=["POST"])
 def generate():
@@ -62,31 +107,21 @@ def generate():
     if not user_prompt.strip():
         return jsonify({"error": "Prompt is empty"}), 400
 
-    # Build prompt using template
-    final_prompt = TEMPLATE.format(platform=platform, user_prompt=user_prompt)
+    final_prompt = TEMPLATE.format(
+        platform=platform,
+        user_prompt=user_prompt
+    )
 
-    try:
-        # Call local Ollama (qwen2.5:1.5b)
-        response = requests.post(
-            "http://localhost:11434/api/generate",
-            json={
-                "model": "qwen2.5:1.5b",
-                "prompt": final_prompt,
-                "stream": False
-            }
-        )
+    result, error = call_hf(final_prompt)
 
-        data = response.json()
-        expanded_prompt = data.get("response", "").strip()
+    if error:
+        return jsonify({"error": error}), 500
 
-        if not expanded_prompt:
-            return jsonify({"error": "No response returned from the local model"}), 500
+    return jsonify({
+        "expanded_prompt": result.strip()
+    })
 
-        return jsonify({"expanded_prompt": expanded_prompt})
-
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
-
+# Run
 
 if __name__ == "__main__":
     app.run(debug=True)
