@@ -420,7 +420,7 @@ async function generateOutputs(){
   button.style.opacity = 0.5;
 
   try {
-    const res = await fetch('http://127.0.0.1:5000/generate', {
+    const res = await fetch("https://promptflow-backend-75nt.onrender.com/generate", {
       method: 'POST', headers: {'Content-Type':'application/json'},
       body: JSON.stringify({ prompt, platform })
     });
