@@ -1,8 +1,8 @@
 # PromptFlow ⚡
 
-PromptFlow is a platform-aware AI prompt generator that transforms simple ideas into high-quality, image-generation prompts tailored for different AI models 🎨
+PromptFlow is a **platform-aware AI prompt optimizer** that transforms simple ideas into high-quality, task-ready prompts tailored for different AI platforms and models 🚀
 
-It focuses on clarity, consistency, and visual intent by adapting prompt structure and tone based on how each platform interprets prompts.
+It focuses on clarity, intent alignment, and structural optimization by adapting prompt style and tone based on how each platform interprets instructions.
 
 ---
 
@@ -12,35 +12,57 @@ It focuses on clarity, consistency, and visual intent by adapting prompt structu
 
 ---
 
-## 📸 Overview
+## 📌 Overview
 
-Different image generation models respond best to different prompt styles.  
-PromptFlow solves this by intelligently reshaping prompts so they feel native to each platform.
+Different AI platforms respond best to different prompting styles.  
+A prompt that works well on ChatGPT may perform poorly on Claude or Gemini.
 
-The output is a clean, expressive **4–6 line prompt** that balances detail and readability without over-engineering.
+PromptFlow solves this by intelligently reshaping prompts so they feel **native to each platform**—whether you're generating text, images, code, analysis, or creative content.
+
+The output is a clean, expressive, and structured prompt optimized for:
+
+- accuracy
+- clarity
+- reasoning quality
+- creativity
+- platform behavior
+
+—all without manual re-engineering.
 
 ---
 
 ## 🎯 Supported Platforms
 
-| Platform                 | Prompt Style                                        |
-| ------------------------ | --------------------------------------------------- |
-| Gemini                   | Cinematic, atmospheric, mood-driven descriptions    |
-| Midjourney               | Artistic direction, lighting, textures, lens detail |
-| Stable Diffusion         | Structured, keyword-rich visual descriptors         |
-| ChatGPT Image Generation | Natural language, expressive and simple             |
-| Claude                   | Elegant, emotionally rich imagery                   |
-| DALL·E                   | Clear intent, vibrant contrasts                     |
-| Firefly                  | Stylized color harmony and dramatic accents         |
-| Ollama (Local)           | Balanced cinematic detail with minimal jargon       |
+| Platform            | Optimization Style                                       |
+| ------------------- | -------------------------------------------------------- |
+| ChatGPT             | Clear instruction-following with structured reasoning    |
+| Gemini              | Context-rich, analytical, and conversational             |
+| Claude              | Thoughtful, detailed, and precise task-oriented prompts  |
+| Midjourney          | Artistic direction and creative visual instruction       |
+| Stable Diffusion    | Keyword-rich structured visual descriptors               |
+| DALL·E              | Direct, intent-focused generation prompts                |
+| Firefly             | Stylized creative optimization                           |
+| Hugging Face Models | General-purpose prompts tuned for transformer-based LLMs |
 
 ---
 
 ## ✨ Key Features
 
-### 🔹 Platform-Aware Prompt Generation
+### 🔹 Platform-Aware Prompt Engineering
 
-Each prompt is dynamically optimized based on the selected image generation platform.
+Each prompt is dynamically optimized based on the selected AI platform to maximize output quality and relevance.
+
+### 🔹 Multi-Purpose Optimization
+
+PromptFlow supports prompt engineering for:
+
+- Content creation
+- Coding assistance
+- Research queries
+- Brainstorming
+- Analysis tasks
+- Creative writing
+- Image generation prompts
 
 ### 🔹 Minimal, Premium UI
 
@@ -48,13 +70,23 @@ Each prompt is dynamically optimized based on the selected image generation plat
 - Floating gradient background
 - Smooth dropdown and fade transitions
 
-### 🔹 Local Inference
+### 🔹 Cloud-Based Intelligence
 
-Runs fully on **Ollama**, avoiding API limits, billing, or external dependencies 🔒
+- Powered by **Hugging Face Inference API**
+- No local models required
+- Fast, scalable, and reliable processing
+
+### 🔹 Hosted Backend
+
+The backend is fully deployed on **Render**, ensuring:
+
+- High availability
+- Zero local setup
+- Production-grade performance
 
 ### 🔹 Fast Workflow
 
-Simple idea → polished final prompt in seconds ⚡
+Simple idea → optimized platform-ready prompt in seconds ⚡
 
 ---
 
@@ -70,7 +102,8 @@ Simple idea → polished final prompt in seconds ⚡
 
 - Python
 - Flask
-- Ollama (local LLM inference)
+- Hugging Face Inference API
+- Render (Cloud Hosting)
 
 ---
 
@@ -79,59 +112,40 @@ Simple idea → polished final prompt in seconds ⚡
 ### Prerequisites
 
 - Python 3.9+
-- Ollama installed and running
-- A supported Ollama model (example: gemma)
+- A Hugging Face account and API key
 
 ---
 
 ### 1️⃣ Clone the repository
 
-```bash
-git clone https://github.com/anshgirap/PromptFlow.git
+git clone https://github.com/anshgirap/PromptFlow.git  
 cd PromptFlow
-```
 
 ---
 
 ### 2️⃣ Install backend dependencies
 
-```bash
-cd backend
+cd backend  
 pip install -r requirements.txt
-```
 
 ---
 
-### 3️⃣ Install and run Ollama
+### 3️⃣ Configure Environment Variables
 
-Download Ollama from:  
-https://ollama.com
+Create a `.env` file inside the backend folder:
 
-Pull a model:
-
-```bash
-ollama pull gemma
-```
-
-Ensure Ollama is running locally on:
-
-```
-http://localhost:11434
-```
+HUGGINGFACE_API_KEY=your_api_key_here  
+RENDER_BACKEND_URL=your_render_backend_url
 
 ---
 
-### 4️⃣ Start the backend server
+### 4️⃣ Start the backend server locally (optional)
 
-```bash
 python app.py
-```
 
-The Flask server runs on:
+The Flask server will run on:
 
-```
 http://127.0.0.1:5000
-```
 
 ---
 
@@ -139,9 +153,7 @@ http://127.0.0.1:5000
 
 Open the file directly in your browser:
 
-```
 frontend/index.html
-```
 
 No build step required.
 
@@ -149,37 +161,35 @@ No build step required.
 
 ## 📁 Project Structure
 
-```text
 PromptFlow/
-│
-├── assets/
-│   ├── logos/
-│   │   ├── logo.png
-│   │   └── logosmall.png
-│   │
-│   └── preview/
-│       └── promptflow-preview.png
-│
-├── backend/
-│   ├── app.py
-│   └── requirements.txt
-│
-├── frontend/
-│   └── index.html
-│
-├── README.md
+
+├── assets/  
+│ ├── logos/  
+│ │ ├── logo.png  
+│ │ └── logosmall.png  
+│ │  
+│ └── preview/  
+│ └── promptflow-preview.png  
+│  
+├── backend/  
+│ ├── app.py  
+│ └── requirements.txt  
+│  
+├── frontend/  
+│ └── index.html  
+│  
+├── README.md  
 └── LICENSE
-```
 
 ---
 
 ## 🧠 How It Works
 
-1. The user enters a short idea.
-2. A target platform is selected from the dropdown.
-3. The backend applies platform-specific prompt rules.
-4. Ollama generates a refined image prompt.
-5. The result appears with smooth UI transitions.
+1. The user enters a short idea or instruction.
+2. A target AI platform is selected from the dropdown.
+3. The backend applies platform-specific optimization rules.
+4. The Hugging Face API generates a refined prompt.
+5. The optimized result appears instantly in the UI.
 
 ---
 
@@ -187,7 +197,15 @@ PromptFlow/
 
 Prompt behavior can be adjusted inside `app.py` by editing the platform template rules.
 
-This allows easy tuning of tone, complexity, and artistic emphasis without changing the frontend.
+This allows easy tuning of:
+
+- tone
+- complexity
+- creativity level
+- structure
+- verbosity
+
+—without modifying the frontend.
 
 ---
 
