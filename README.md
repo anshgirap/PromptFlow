@@ -6,6 +6,22 @@ It focuses on clarity, intent alignment, and structural optimization by adapting
 
 ---
 
+## 🌐 Live Application
+
+PromptFlow is fully deployed and ready to use online:
+
+🔗 **Live Tool:** https://promptflow-co.netlify.app/
+
+- Frontend hosted on **Netlify**
+- Backend hosted on **Render**
+- Powered by **Hugging Face Inference API**
+- No installation required
+- Works instantly in any modern browser
+
+Most users do not need to run anything locally — simply open the link above and start generating optimized prompts immediately.
+
+---
+
 ## 🖼 Preview
 
 ![PromptFlow UI](./assets/preview/promptflow-preview.png)
@@ -76,13 +92,11 @@ PromptFlow supports prompt engineering for:
 - No local models required
 - Fast, scalable, and reliable processing
 
-### 🔹 Hosted Backend
+### 🔹 Fully Hosted Infrastructure
 
-The backend is fully deployed on **Render**, ensuring:
-
-- High availability
-- Zero local setup
-- Production-grade performance
+- Frontend deployed on **Netlify**
+- Backend deployed on **Render**
+- Accessible from anywhere with zero setup
 
 ### 🔹 Fast Workflow
 
@@ -97,6 +111,7 @@ Simple idea → optimized platform-ready prompt in seconds ⚡
 - HTML
 - CSS
 - JavaScript
+- Netlify (Hosting)
 
 **Backend**
 
@@ -107,7 +122,9 @@ Simple idea → optimized platform-ready prompt in seconds ⚡
 
 ---
 
-## 🚀 How to Run PromptFlow
+## 🚀 Running Locally (Optional)
+
+While PromptFlow is available online, you can also run it locally if you wish to modify or extend it.
 
 ### Prerequisites
 
@@ -139,7 +156,7 @@ RENDER_BACKEND_URL=your_render_backend_url
 
 ---
 
-### 4️⃣ Start the backend server locally (optional)
+### 4️⃣ Start the backend server locally
 
 python app.py
 
@@ -154,8 +171,6 @@ http://127.0.0.1:5000
 Open the file directly in your browser:
 
 frontend/index.html
-
-No build step required.
 
 ---
 
