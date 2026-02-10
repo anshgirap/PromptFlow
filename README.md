@@ -18,7 +18,7 @@ PromptFlow is fully deployed and ready to use online:
 - No installation required
 - Works instantly in any modern browser
 
-Most users do not need to run anything locally — simply open the link above and start generating optimized prompts immediately.
+Most users do not need to run anything locally, simply open the link above and start generating optimized prompts immediately.
 
 ---
 
@@ -33,7 +33,7 @@ Most users do not need to run anything locally — simply open the link above an
 Different AI platforms respond best to different prompting styles.  
 A prompt that works well on ChatGPT may perform poorly on Claude or Gemini.
 
-PromptFlow solves this by intelligently reshaping prompts so they feel **native to each platform**—whether you're generating text, images, code, analysis, or creative content.
+PromptFlow solves this by intelligently reshaping prompts so they feel **native to each platform** whether you're generating text, images, code, analysis, or creative content.
 
 The output is a clean, expressive, and structured prompt optimized for:
 
@@ -43,7 +43,7 @@ The output is a clean, expressive, and structured prompt optimized for:
 - creativity
 - platform behavior
 
-—all without manual re-engineering.
+all without manual re-engineering.
 
 ---
 
@@ -220,7 +220,7 @@ This allows easy tuning of:
 - structure
 - verbosity
 
-—without modifying the frontend.
+without modifying the frontend.
 
 ---
 
