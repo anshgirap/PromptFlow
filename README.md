@@ -12,12 +12,6 @@ PromptFlow is fully deployed and ready to use online:
 
 🔗 **Live Tool:** https://promptflow-co.netlify.app/
 
-- Frontend hosted on **Netlify**
-- Backend hosted on **Render**
-- Powered by **Hugging Face Inference API**
-- No installation required
-- Works instantly in any modern browser
-
 Most users do not need to run anything locally, simply open the link above and start generating optimized prompts immediately.
 
 ---
