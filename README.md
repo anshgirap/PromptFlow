@@ -8,8 +8,6 @@ It focuses on clarity, intent alignment, and structural optimization by adapting
 
 ## 🌐 Live Application
 
-PromptFlow is fully deployed and ready to use online:
-
 🔗 **Live Tool:** https://promptflow-co.netlify.app/
 
 Most users do not need to run anything locally, simply open the link above and start generating optimized prompts immediately.
