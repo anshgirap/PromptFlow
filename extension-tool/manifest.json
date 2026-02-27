@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "PromptFlow",
+  "version": "0.1",
+  "description": "Create better AI prompts anywhere you write. PromptFlow adds a floating AI assistant to your browser for instant refinement and optimization.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "assets/logo1616.png",
+    "48": "assets/logo4848.png",
+    "128": "assets/logo128128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["ui.html", "assets/logosmall.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ]
+}
